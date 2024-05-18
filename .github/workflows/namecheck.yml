@@ -1,0 +1,45 @@
+name: Branch Name Check
+
+on:
+
+  push:
+
+    branches:
+
+      - '*'
+
+  pull_request:
+
+    branches:
+
+      - '*'
+
+jobs:
+
+  check-branch-name:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Check out the repository
+
+        uses: actions/checkout@v2
+
+      - name: Verify branch name
+
+        run: |
+
+          branch_name="${GITHUB_REF##*/}"
+
+          allowed_patterns="^(feature|bugfix|hotfix)/"
+
+          if [[ ! "$branch_name" =~ $allowed_patterns ]]; then
+
+            echo "Branch name '$branch_name' is not allowed."
+
+            echo "Branch names must start with one of the following: feature/, bugfix/, hotfix/"
+
+            exit 1
+
+          fi
