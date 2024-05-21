@@ -30,7 +30,7 @@ jobs:
 
         run: |
 
-          branch_name="${GITHUB_REF##*/}"
+          branch_name="${GITHUB_HEAD_REF}"
 
           allowed_patterns="^(feature|bugfix|hotfix)/"
 
